@@ -1,13 +1,6 @@
-<br />
-<p align="center">
-
-<h3 align="center">AUTODEPLOY</h3>
-
+<h3  align="center">AUTODEPLOY</h3>
 <p align="center">
 a docker image listening for commit changes and automatic deploy to server.
-</a>
-<br />
-</p>
 </p>
 
 <!-- TABLE OF CONTENTS -->
