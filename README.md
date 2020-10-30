@@ -95,10 +95,10 @@ Example value: `30000` (wait for 30 seconds) `60000` (wait 1 minute)
 **(REQUIRED)** Socket path are needed for contact docker daemon.
 
 - For Windows:
-  `//var/run/docker.sock:/var/run/docker.sock`
+  `-v //var/run/docker.sock:/var/run/docker.sock`
 
 - For Linux:
-  `/var/run/docker.sock:/var/run/docker.sock`
+  `-v /var/run/docker.sock:/var/run/docker.sock`
 <br/>
 
 **(Optional)** Volume for store downloaded repository.<br/>
@@ -106,11 +106,11 @@ Example value: `30000` (wait for 30 seconds) `60000` (wait 1 minute)
 *Example value:*
 
 - Relative path:
-  - `DEPLOY_DIRECTORY=repo`
-  - `/auto-deploy:/nodejs/repo`
+  - `-e DEPLOY_DIRECTORY=repo`
+  - `-v /autodeploy:/nodejs/repo`
 - Absolute path:
-  - `DEPLOY_DIRECTORY=//autodeploy-repo`
-  - `/autodeploy:/autodeploy-repo`
+  - `-e DEPLOY_DIRECTORY=//autodeploy-repo`
+  - `-v /autodeploy:/autodeploy-repo`
 
 <!-- KNOWN ISSUES -->
 
