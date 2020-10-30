@@ -49,7 +49,7 @@ docker run -it -d \
 	-e DEPLOY_DIRECTORY="//autodeploy-repo" \
 	-e REFRESH_RATE=30000 \
 	-v /var/run/docker.sock:/var/run/docker.sock \
-	-v /auto-deploy:/repo \
+	-v /autodeploy:/autodeploy-repo \
 	wuttinanhi/autodeploy:latest
 ```
 
@@ -110,7 +110,7 @@ Example value: `30000` (wait for 30 seconds) `60000` (wait 1 minute)
   - `/auto-deploy:/nodejs/repo`
 - Absolute path:
   - `DEPLOY_DIRECTORY=//autodeploy-repo`
-  - `/auto-deploy:/autodeploy-repo`
+  - `/autodeploy:/autodeploy-repo`
 
 <!-- KNOWN ISSUES -->
 
