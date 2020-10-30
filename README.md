@@ -57,49 +57,36 @@ docker run -it -d \
 
 ## Available Environment Variable:
 
-`GITHUB_USERNAME` (Optional)
-
+`GITHUB_USERNAME` (Optional)<br/>
 Your GitHub username.
+<br/><br/>
 
+`GITHUB_KEY` (Optional)<br/>
+Your GitHub Personal Access Token.<br/>
+You can get it at [https://github.com/settings/tokens](https://github.com/settings/tokens) **repo scope are needed**.
+<br/><br/>
 
-`GITHUB_KEY` (Optional)
-
-Your GitHub Personal Access Token.
-
-You can get it at https://github.com/settings/tokens **repo scope are needed**.
-
-
-`GITHUB_REPOSITORY` (Required)
-
-Repository to listening for change.
-
+`GITHUB_REPOSITORY` (Required)<br/>
+Repository to listening for change.<br/>
 Example value: `wuttinanhi/test-compose`
+<br/><br/>
 
-
-`GITHUB_BRANCH` (Required)
-
-Branch to listening for change.
-
+`GITHUB_BRANCH` (Required)<br/>
+Branch to listening for change.<br/>
 Example value: `test` `production`
+<br/><br/>
 
+`DEPLOY_DIRECTORY` (Optional)<br/>
+Directory path for store downloaded repository.<br/>
+Default value: `repo`<br/>
+Example value: `//autodeploy-repo`<br/>
+<br/><br/>
 
-`DEPLOY_DIRECTORY` (Optional)
-
-Directory path for store downloaded repository.
-
-Default value: `repo`
-
-Example value: `//autodeploy-repo`
-
-
-`REFRESH_RATE` (Optional)
-
-Wait for amount of milliseconds to see changes again.
-
-Default value: `15000`
-
+`REFRESH_RATE` (Optional)<br/>
+Wait for amount of milliseconds to see changes again.<br/>
+Default value: `15000`<br/>
 Example value: `30000` (wait for 30 seconds) `60000` (wait 1 minute)
-
+<br/><br/>
 
 
 <!-- VOLUME -->
