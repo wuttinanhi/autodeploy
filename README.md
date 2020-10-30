@@ -58,29 +58,49 @@ docker run -it -d \
 ## Available Environment Variable:
 
 `GITHUB_USERNAME` (Optional)
+
 Your GitHub username.
 
+
 `GITHUB_KEY` (Optional)
+
 Your GitHub Personal Access Token.
+
 You can get it at https://github.com/settings/tokens **repo scope are needed**.
 
+
 `GITHUB_REPOSITORY` (Required)
+
 Repository to listening for change.
+
 Example value: `wuttinanhi/test-compose`
 
+
 `GITHUB_BRANCH` (Required)
+
 Branch to listening for change.
+
 Example value: `test` `production`
 
+
 `DEPLOY_DIRECTORY` (Optional)
+
 Directory path for store downloaded repository.
+
 Default value: `repo`
+
 Example value: `//autodeploy-repo`
 
+
 `REFRESH_RATE` (Optional)
+
 Wait for amount of milliseconds to see changes again.
+
 Default value: `15000`
+
 Example value: `30000` (wait for 30 seconds) `60000` (wait 1 minute)
+
+
 
 <!-- VOLUME -->
 
