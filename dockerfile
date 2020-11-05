@@ -1,35 +1,35 @@
 FROM alpine:3.12.1
 
-#Update, Upgrade and Install necessary
+# Update, upgrade and install necessary
 RUN apk update && \
     apk upgrade
 RUN apk --no-cache add git libgit2-dev tzdata g++ gcc libffi-dev openssl-dev libc-dev make
 
-#Install Node
+# Install Node
 RUN apk add --update nodejs npm
 
-#Install python3
+# Install Python3
 RUN apk add --no-cache python3
 RUN apk add --update py3-pip
 
-#Install Docker necessary
+# Install Docker necessary
 RUN apk add --no-cache docker-cli
 RUN apk add --no-cache --virtual .docker-compose-deps python3-dev
 RUN pip3 install docker-compose && \
     apk del .docker-compose-deps
 
-#Copy source
+# Copy source to image
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 COPY src /nodejs/src
 COPY package.json /nodejs/.
 COPY package-lock.json /nodejs/.
 
-#Run npm install
+# Run npm install
 WORKDIR /nodejs/
 RUN npm install
 
-#Change permission docker-entrypoint.sh
+# Change permission of docker-entrypoint.sh
 RUN chmod 777 /docker-entrypoint.sh
 
-#Entrypoint
+# Entrypoint
 ENTRYPOINT [ "/docker-entrypoint.sh" ]

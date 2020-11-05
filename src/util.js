@@ -1,9 +1,11 @@
-// Utility Function
+/**
+ * Utility function
+ */
 const fs = require("fs");
 var shell = require("shelljs");
 
 /**
- * Pretty date
+ * Return string of pretty date
  * @return {string} Return a pretty date [2020-10-29 4:3:7]
  */
 function GenerateDate() {
@@ -21,7 +23,7 @@ function GenerateDate() {
 }
 
 /**
- * Wait
+ * Wait for amount of milliseconds
  * @param  {number} Tick Tick
  * @return {Promise} Return resolve(true) after finish
  */
@@ -116,7 +118,7 @@ function ShellJsExecute(Command, Directory) {
 }
 
 /**
- * ShellJS Chmod
+ * ShellJS chmod
  * @param  {string} Mode Mode (777)
  * @param  {string} File Target file
  * @return {Promise} Return resolve(true) complete
