@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  autodeploy:
+    build: ./
+    #restart: always
+    environment:
+      - GITHUB_REPOSITORY=wuttinanhi/test-compose
+      - GITHUB_BRANCH=test
+      - REFRESH_RATE=30000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

@@ -5,25 +5,29 @@
   "main": "index.js",
   "scripts": {
     "test": "node --trace-warnings src/index.js",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "eslint-config-prettier": "^6.15.0",
-    "eslint-plugin-prettier": "^3.1.4",
     "octonode": "^0.9.5",
     "prettier": "^2.1.2",
     "rimraf": "^3.0.2",
     "shelljs": "^0.8.4"
   },
   "devDependencies": {
+    "esdoc": "^1.1.0",
     "eslint": "^7.12.1",
-    "eslint-config-standard": "^15.0.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-config-standard": "^16.0.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.2",
+    "jsdoc": "^3.6.6",
+    "minami": "^1.2.3",
     "prettier": "^2.1.2"
   }
 }
