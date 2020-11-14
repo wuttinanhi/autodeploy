@@ -134,14 +134,15 @@ async function main() {
   // Create repository directory
   await Lib.CreateDirectory(TargetDirectory);
 
+  // Check Loop
   while (true) {
     try {
       // Get new commit SHA
       const NewSHA = await GetLastCommitSha(OctonodeRepo, TargetBranch);
 
       // Check if New commit SHA is different from current commit SHA
-      // If different = new commit is being pushed
-      // If not different = nothing change
+      // If different (!==) new commit is being pushed
+      // If not different (===) nothing change
 
       if (NewSHA !== CurrentSHA) {
         // Log new commit detected
@@ -152,7 +153,7 @@ async function main() {
             CurrentSHA.substring(0, 5)
         );
 
-        // Target directory of git clone
+        // Target directory for clone to
         const DestinationDirectory = Path.resolve(
           TargetDirectory,
           "repo-" + TargetBranch + "-" + NewSHA
@@ -192,7 +193,7 @@ async function main() {
           Log("Execute directory: " + DestinationDirectory);
 
           // Change permission of entry file
-          Lib.ShellJsChmod(777, EntryFile);
+          Lib.ShellJsChmod(770, EntryFile);
 
           // Start execute the entry file
           await Lib.ShellJsExecute(EntryFile, DestinationDirectory);
@@ -205,7 +206,7 @@ async function main() {
         }
         // #endregion region Check if repository have an entry file
 
-        // Update current SHA
+        // Update current SHA to New SHA
         CurrentSHA = NewSHA;
       } else {
         // No new commit found

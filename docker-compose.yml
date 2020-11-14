@@ -3,7 +3,7 @@ version: "3"
 services:
   autodeploy:
     build: ./
-    #restart: always
+    restart: on-failure
     environment:
       - GITHUB_REPOSITORY=wuttinanhi/test-compose
       - GITHUB_BRANCH=test
