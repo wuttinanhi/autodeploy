@@ -1,7 +1,7 @@
 const Path = require("path");
 const rimraf = require("rimraf");
-const Lib = require("./lib");
-var github = require("octonode");
+const Lib = require("./util.js");
+const github = require("octonode");
 
 // Info variable declaration
 // #region Info variable declaration
@@ -17,14 +17,14 @@ const DebugMode = Boolean(process.env.DEBUG_MODE);
 
 // Internal variable declaration
 // #region Internal variable declaration
-var CurrentSHA = "NULL";
-var IsCloning = false;
-var ShouldLoop = true;
+let CurrentSHA = "NULL";
+let IsCloning = false;
+const ShouldLoop = true;
 // #endregion Internal variable declaration
 
 // Make repository url looks good
 // #region Make repository url looks good
-var RepositoryUrl;
+let RepositoryUrl;
 if (GithubKey === "" || GithubKey === null) {
   RepositoryUrl = "https://github.com/";
 } else {
@@ -32,15 +32,16 @@ if (GithubKey === "" || GithubKey === null) {
     "https://" + GithubUsername + ":" + GithubKey + "@github.com/";
 }
 RepositoryUrl = RepositoryUrl + TargetRepository;
+console.log(RepositoryUrl);
 // #endregion Make repository url looks good
 
 // Create Octonode Github client
 // #region Create Octonode Github client
-var OctonodeClient = github.client({
+const OctonodeClient = github.client({
   username: GithubUsername,
   password: GithubKey,
 });
-var OctonodeRepo = OctonodeClient.repo(TargetRepository);
+const OctonodeRepo = OctonodeClient.repo(TargetRepository);
 // #endregion Create Octonode Github client
 
 // Function wrapper
@@ -80,7 +81,7 @@ async function CloneRepo(TargetRepo, Branch, Destination, DeleteFirst = false) {
   IsCloning = true;
 
   // Clone destination folder
-  var CloneDestination = Path.resolve(Destination);
+  const CloneDestination = Path.resolve(Destination);
 
   // Deprecated
   if (DeleteFirst === true) {
@@ -89,7 +90,7 @@ async function CloneRepo(TargetRepo, Branch, Destination, DeleteFirst = false) {
 
   try {
     // Command to clone Github
-    var Commandline =
+    const Commandline =
       "git clone --branch=" + Branch + " " + TargetRepo + " " + Destination;
 
     // Execute the command
@@ -103,11 +104,11 @@ async function CloneRepo(TargetRepo, Branch, Destination, DeleteFirst = false) {
 
     // return promise resolve(true)
     return Promise.resolve(true);
-  } catch (e) {
+  } catch (error) {
     // Something error when execute
     console.log("Error cloning");
 
-    return Promise.reject(new Error(e));
+    return Promise.reject(error);
   } finally {
     // set IsCloning to false
     IsCloning = false;
@@ -133,26 +134,27 @@ async function main() {
   // Create repository directory
   await Lib.CreateDirectory(TargetDirectory);
 
+  // Check Loop
   while (true) {
     try {
       // Get new commit SHA
-      var NewSHA = await GetLastCommitSha(OctonodeRepo, TargetBranch);
+      const NewSHA = await GetLastCommitSha(OctonodeRepo, TargetBranch);
 
       // Check if New commit SHA is different from current commit SHA
-      // If different = new commit is being pushed
-      // If not different = nothing change
+      // If different (!==) new commit is being pushed
+      // If not different (===) nothing change
 
       if (NewSHA !== CurrentSHA) {
         // Log new commit detected
         Log(
           "New commit detected. New SHA: " +
-            CurrentSHA.substring(0, 5) +
+            NewSHA.substring(0, 5) +
             " Old SHA: " +
-            NewSHA.substring(0, 5)
+            CurrentSHA.substring(0, 5)
         );
 
-        // Target directory of git clone
-        var DestinationDirectory = Path.resolve(
+        // Target directory for clone to
+        const DestinationDirectory = Path.resolve(
           TargetDirectory,
           "repo-" + TargetBranch + "-" + NewSHA
         );
@@ -161,7 +163,7 @@ async function main() {
         // #region Perform clone new commit
 
         // Check Directory Exists
-        var TargetCommitDirectory = await Lib.CheckDirectoryExists(
+        const TargetCommitDirectory = await Lib.CheckDirectoryExists(
           DestinationDirectory
         );
 
@@ -180,10 +182,10 @@ async function main() {
         // #region Check if repository have an entry file
 
         // Entry file path
-        var EntryFile = Path.join(DestinationDirectory, "deploy-entry.sh");
+        const EntryFile = Path.join(DestinationDirectory, "deploy-entry.sh");
 
         // Check entry file exists in cloned directory
-        var CheckEntryFileExists = await Lib.CheckFileExists(EntryFile);
+        const CheckEntryFileExists = await Lib.CheckFileExists(EntryFile);
 
         if (CheckEntryFileExists === true) {
           // Found entry file
@@ -191,7 +193,7 @@ async function main() {
           Log("Execute directory: " + DestinationDirectory);
 
           // Change permission of entry file
-          Lib.ShellJsChmod(777, EntryFile);
+          Lib.ShellJsChmod(770, EntryFile);
 
           // Start execute the entry file
           await Lib.ShellJsExecute(EntryFile, DestinationDirectory);
@@ -204,7 +206,7 @@ async function main() {
         }
         // #endregion region Check if repository have an entry file
 
-        // Update current SHA
+        // Update current SHA to New SHA
         CurrentSHA = NewSHA;
       } else {
         // No new commit found
@@ -215,11 +217,12 @@ async function main() {
       if (ShouldLoop === false) {
         break;
       }
-    } catch (e) {
+    } catch (error) {
       // Somethig error
       Log("Something error.");
+
       if (DebugMode === true) {
-        console.log(e);
+        console.log(error);
       }
     }
 

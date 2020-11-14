@@ -1,7 +1,4 @@
-/**
- * Utility function
- */
-const fs = require("fs");
+var fs = require("fs");
 var shell = require("shelljs");
 
 /**
