@@ -1,20 +1,20 @@
-var fs = require("fs");
-var shell = require("shelljs");
+const fs = require("fs");
+const shell = require("shelljs");
 
 /**
  * Return string of pretty date
- * @return {string} Return a pretty date [2020-10-29 4:3:7]
+ * @return {string} Return a pretty date like 2020-10-29 4:3:7
  */
 function GenerateDate() {
-  var today = new Date();
+  const today = new Date();
 
-  var date =
+  const date =
     today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
 
-  var time =
+  const time =
     today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
-  var dateTime = date + " " + time;
+  const dateTime = date + " " + time;
 
   return dateTime;
 }
@@ -99,7 +99,7 @@ function ShellJsExecute(Command, Directory) {
   return new Promise((resolve, reject) => {
     try {
       shell.cd(Directory);
-      var ShellInstance = shell.exec(Command);
+      const ShellInstance = shell.exec(Command);
 
       if (ShellInstance.code !== 0) {
         // ShellInstance.exit(1);
